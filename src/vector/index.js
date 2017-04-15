@@ -69,12 +69,15 @@ import url from 'url';
 import {parseQs, parseQsFromFragment} from './url_utils';
 import Platform from './platform';
 
+import MatrixClientPeg from 'matrix-react-sdk/lib/MatrixClientPeg';
+
 var lastLocationHashSet = null;
 
 var CallHandler = require("matrix-react-sdk/lib/CallHandler");
 CallHandler.setConferenceHandler(VectorConferenceHandler);
 
 var counterpart = require('counterpart');
+MatrixClientPeg.setIndexedDbWorkerScript(window.vector_indexeddb_worker_script);
 
 function checkBrowserFeatures(featureList) {
     if (!window.Modernizr) {
@@ -299,6 +302,7 @@ async function loadApp() {
         sdk.setLanguage(localSettingsString.language);
         counterpart.registerTranslations('en_EN', require('../i18n/en_EN'));
         counterpart.registerTranslations('de_DE', require('../i18n/de_DE'));
+        counterpart.registerTranslations('pt_BR', require('../i18n/pt-br_PT'));
         counterpart.setFallbackLocale('en_EN');
         dis.register(onAction);
         if (Object.keys(localSettingsString).length === 0) {
